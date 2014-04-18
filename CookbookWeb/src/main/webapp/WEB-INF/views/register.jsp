@@ -12,7 +12,7 @@
 
 <h1>조리법 등록</h1>
 
-<form action="${ctx}/recipe/add" method="POST" >
+<form action="${ctx}/recipe/add" method="POST" enctype="multipart/form-data">
 	<table border="1">
 		<tr>
 			<td>조리명</td>
@@ -25,6 +25,10 @@
 		<tr>
 			<td>조리과정</td>
 			<td><textarea name="procedure"></textarea></td>
+		</tr>
+		<tr>
+			<td>요리사진</td>
+			<td><input type="file" name="imageFile" /></td>
 		</tr>
 	</table>
 	<input type="submit" value="등록" />
