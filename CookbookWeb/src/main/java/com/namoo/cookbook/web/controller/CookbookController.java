@@ -81,6 +81,9 @@ public class CookbookController {
 		if (imageFile != null) {
 			contentType = imageFile.getContentType();
 			in = new FileInputStream(new File(imageRoot + imageFile.getFileName()));
+		} else {
+			contentType = "image/jpeg";
+			in = this.getClass().getResourceAsStream("/default.jpg");
 		}
 		
 		try {
