@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<!-- context property-placeholder 사용하기 -->
+	<context:property-placeholder location="database.properties"/>
+	
+	<bean id="dataSource" class="store.CookbookDataSource">
+		<property name="driver" value="${database.driver}" />
+		<property name="username" value="${database.username}" />
+		<property name="password" value="${database.password}" />
+		<property name="url" value="${database.url}" />
+	</bean>
+	
+	<!-- util properties 사용하기 -->
+	<util:properties id="dbProperties" location="database.properties" />
+	
+	<bean id="dataSource2" class="store.CookbookDataSource">
+		<property name="driver" value="#{dbProperties['database.driver']}" />
+		<property name="username" value="#{dbProperties['database.username']}" />
+		<property name="password" value="#{dbProperties['database.password']}" />
+		<property name="url" value="#{dbProperties['database.url']}" />
+	</bean>
+</beans>

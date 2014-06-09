@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- setter로 주입 -->
+	<bean id="chef" class="cookbook.step2.Chef" init-method="init"
+		destroy-method="destroy" p:recipe-ref="gimchiRecipe" />
+	
+	<bean id="chef2" class="cookbook.step2.Chef" init-method="init"
+		destroy-method="destroy" p:recipe-ref="donjangRecipe" />
+
+	<!-- 생성자 주입 -->	
+	<bean id="chef3" class="cookbook.step2.Chef">
+		<constructor-arg ref="donjangRecipe"/>
+	</bean>
+	
+	<bean id="gimchiRecipe" class="cookbook.step2.Gimchi">
+		<constructor-arg index="0" value="김치찌개" />
+	</bean>
+	<bean id="donjangRecipe" class="cookbook.step2.Donjang">
+		<constructor-arg value="된장찌개"/>
+	</bean>
+</beans>

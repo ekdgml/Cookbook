@@ -147,7 +147,7 @@ public class RecipeDaoJdbc implements RecipeDao {
 		PreparedStatement pstmt = null;
 		try {
 			 conn = datasource.getConnection();
-			 String sql = "DELETE recipe_tb WHERE recipe_nm=?";
+			 String sql = "DELETE FROM recipe_tb WHERE recipe_nm=?";
 			 pstmt = conn.prepareStatement(sql);
 			 
 			 pstmt.setString(1, recipeName);

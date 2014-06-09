@@ -28,6 +28,7 @@ import com.namoo.cookbook.domain.Cookbook;
 import com.namoo.cookbook.domain.ImageFile;
 import com.namoo.cookbook.domain.Recipe;
 import com.namoo.cookbook.service.facade.CookbookService;
+import com.namoo.cookbook.web.session.LoginRequired;
 
 /**
  * 요리책 컨트롤러
@@ -35,9 +36,10 @@ import com.namoo.cookbook.service.facade.CookbookService;
  *
  */
 @Controller
+@LoginRequired
 public class CookbookController {
 	//
-	@Value("c:\\daycourse\\cookbook\\")
+	@Value("#{cookbook['imageRootPath']}")
 	private String imageRoot;
 	
 	@Autowired
@@ -94,11 +96,24 @@ public class CookbookController {
 		}
 	}
 	
+	@RequestMapping(value="/recipe/{recipeName}/delete", method=RequestMethod.GET)
+	public void deleteRecipe(@PathVariable("recipeName") String recipeName, HttpServletResponse resp) {
+		//
+		cookbookService.removeRecipe(recipeName);
+		try {
+			resp.sendRedirect("/cookbook/main");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	//-------------------------------------------------------------------------------------
 	//private method
 	
 	private void setupImageToRecipe(Recipe recipe, MultipartFile file) throws IOException {
 		//
+		if (file.isEmpty()) return;
+		
 		StringBuffer sb = new StringBuffer();
 		sb.append(new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date()));
 		sb.append(".");
